@@ -1,0 +1,53 @@
+---
+title: "Shiny App Presentation"
+author: "Selmane Fouad"
+date: "September 17, 2017"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Synopsis
+
+In this app, i used the NYC Taxi and Limousine Commission (TLC) to show where and when the cab drivers pick-up and drop-off their customers. The data is so big so I used the first 100 trips of the year 2016.
+
+##Loading and processing the raw data
+You can download the data from the tlc website <http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml>
+
+```{r}
+taxi<- read.csv("trips.csv")
+
+```
+
+The Data column names.
+```{r,echo=T,comment=""}
+colnames(taxi)
+
+```
+
+***
+
+Her's five row of the  final data I used in my application.
+
+```{r,comment=""}
+taxi<-taxi[,c(1,7,8,11,12,3,20)]
+head(taxi)
+```
+
+
+***
+
+Her's the pick-up locations for 100 trips.
+
+```{r , message=FALSE, warning=FALSE}
+library(leaflet)
+library(tidyr)
+leaflet(taxi)%>%
+  addTiles()%>%
+  addMarkers(lng = taxi$lng,lat = taxi$lat)
+
+```
+
+
